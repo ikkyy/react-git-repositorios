@@ -4,7 +4,7 @@ import api from '../../services/api'
 
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
 
-import { Container, Form, SubmitButton } from './styles';
+import { Container, Form, SubmitButton, List } from './styles';
 
 export default class Main extends Component {
 
@@ -25,7 +25,7 @@ export default class Main extends Component {
 
     const { newRepo, repositories } = this.state
 
-    const response = await api.get(`/repos/${newRepo}/unform`)
+    const response = await api.get(`/repos/${newRepo}`)
 
     const data = {
       name: response.data.full_name,
@@ -39,7 +39,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { newRepo, loading } = this.state
+    const { newRepo, repositories, loading } = this.state
 
     return (
       <Container>
@@ -62,6 +62,15 @@ export default class Main extends Component {
               )}
           </SubmitButton>
         </Form>
+
+        <List>
+          {repositories.map(repository => (
+            <li key={repository.name}>
+              <span>{repository.name}</span>
+              <a href="">Link</a>
+            </li>
+          ))}
+        </List>
       </Container>
     )
   }
